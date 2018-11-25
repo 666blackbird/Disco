@@ -23,7 +23,7 @@ public class ArtistController {
         return "artists";
     }
 
-    @PostMapping("/artists/new")
+    @PostMapping("/artists/new", method = MethodType.POST)
     public String newArtist(Artist a) {
         try {
             Artist artist = new Artist();

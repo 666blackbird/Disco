@@ -8,8 +8,13 @@ import persistence.ConnectionFactory;
 
 @Component
 public class ArtistDAO {
+    private static EntityManager em;
+
+    public ArtistDAO() {
+        this.em = new ConnectionFactory().getConnection();
+    }
+
     public void create(Artist a) {
-        EntityManager em = new ConnectionFactory().getConnection();
         try {
             em.getTransaction().begin();
             em.persist(a);
@@ -24,7 +29,6 @@ public class ArtistDAO {
     
     @Autowired
     public List<Artist> read() {
-        EntityManager em = new ConnectionFactory().getConnection();
         List<Artist> artists = null;
         try {
             artists = em.createQuery("from Artist a").getResultList();
@@ -37,7 +41,6 @@ public class ArtistDAO {
     }
     
     public void update(Artist a) {
-        EntityManager em = new ConnectionFactory().getConnection();
         try {
             em.getTransaction().begin();
             if(a.getId() == null) {
@@ -55,7 +58,6 @@ public class ArtistDAO {
     }
     
     public void delete(int id) {
-        EntityManager em = new ConnectionFactory().getConnection();
         Artist a = null;
         try {
             a = em.find(Artist.class, id);

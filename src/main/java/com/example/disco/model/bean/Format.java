@@ -9,12 +9,12 @@ import java.util.*;
 public class Format implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "for_id")
-    private Long id;
+    private int id;
     @Column(name = "for_type")
     private String type;
-    @ManyToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "pro_form")
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pro_disc")
+    private List<Product> products;
     
     @Override
     public int hashCode() {
@@ -26,7 +26,7 @@ public class Format implements Serializable {
         Format otr = (Format) obj;
         return this.getType().equalsIgnoreCase(otr.getType());
     }
-
+    
     @Override
     public String toString() {
         return this.getId() + " | " + this.getType();

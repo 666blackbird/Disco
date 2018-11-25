@@ -9,7 +9,7 @@ import lombok.Data;
 public class Product implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pro_id")
-    private Long id;
+    private int id;
     @ManyToMany(fetch = FetchType.LAZY) @JoinColumn(name = "dis_id")
     @Column(name = "pro_disc")
     private Disc disc;
@@ -30,8 +30,9 @@ public class Product implements Serializable {
         if(this.getDisc()==otr.getDisc() && this.getForm()==otr.getForm()) {
             return true;
         }
+        return false;
     }
-
+    
     @Override
     public String toString() {
         return this.getId() + " | " + this.getDisc().getTitle() + " - "

@@ -32,7 +32,7 @@ public class ProductBusiness {
             return false;
         } else if(this.validForm(p) == false) {
             return false;
-        } else if(p.getPrice() == null) {
+        } else if(p.getPrice() == 0) {
             return false;
         } else {
             return true;
@@ -40,11 +40,14 @@ public class ProductBusiness {
     }
 
     public boolean equals(Product p) {
-        if(this.dao.read().stream().map(Product::getDisc.getTitle && getForm.getType).anyMatch(e -> e.equals(p.getForm().getType())) {
-            return true;
-        } else {
-            return false;
+        if(this.dao.read().stream().map(Product::getDisc).anyMatch(e -> e.equals(p.getDisc()))) {
+            if(this.dao.read().stream().map(Product::getForm).anyMatch(e -> e.equals(p.getForm()))) {
+                return true;
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     public boolean create(Product p) throws Exception {

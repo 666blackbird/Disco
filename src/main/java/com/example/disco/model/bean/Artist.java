@@ -14,31 +14,21 @@ public class Artist implements Serializable {
     private String name;
     @Column(name = "art_genre")
     private String genre;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "dis_artist")
-    private List<Disc> discs = new ArrayList<>();
+    private List<Disc> discs;
     
-    public void addDisc(Disc disc) {
-        discs.add(disc);
-        disc.setArtist(this);
-    }
-
-    public void removeDisc(Disc disc) {
-        discs.remove(disc);
-        disc.setArtist(null);
-    }
-
     @Override
     public int hashCode() {
         return this.getName().hashCode();
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         Artist otr = (Artist) obj;
         return this.getName().equalsIgnoreCase(otr.getName());
     }
-
+    
     @Override
     public String toString() {
         return this.getId() + " | " + this.getName() + " - " + this.getGenre();

@@ -9,26 +9,16 @@ import java.util.*;
 public class Disc implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "dis_id")
-    private Long id;
+    private int id;
     @Column(name = "dis_title")
     private String title;
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "art_id") 
-    @Column(name = "dis_artist") 
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "art_id")
+    @Column(name = "dis_artist")
     private Artist artist;
-    @ManyToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pro_disc")
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
     
-    public void addProd(Product prod) {
-        this.products.add(prod);
-        prod.setDisc(this);
-    }
-
-    public void removeProd(Product prod) {
-        this.products.remove(prod);
-        prod.setDisc(null);
-    }
-
     @Override
     public int hashCode() {
         return this.getTitle().hashCode();
@@ -39,7 +29,7 @@ public class Disc implements Serializable {
         Disc otr = (Disc) obj;
         return this.getTitle().equalsIgnoreCase(otr.getTitle());
     }
-
+    
     @Override
     public String toString() {
         return this.getId() + " | " + this.getTitle() + " - " + this.getArtist().getName();
